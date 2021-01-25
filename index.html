@@ -2,7 +2,12 @@
 <head>
     <meta charset="UTF-8">
     <title>ga2 ua nu1 zep1 a kik1</title>
+    <script>
+        const converter = (input) => input + "a";
+    </script>
 </head>
 <body>
-ラーヴァヌー語には様々な表記体系がありますが、当然現世の文字コードはそんなものをサポートしていないので、人々は苦労して様々な転写を使ってきました。しかしIPA表記も要求される中でそのような種々の転写法を独立で用いるというのはいかにも非効率なことです。ということで変換器を生やしていきます。多分。
+    ラーヴァヌー語には様々な表記体系がありますが、当然現世の文字コードはそんなものをサポートしていないので、人々は苦労して様々な転写を使ってきました。しかしIPA表記も要求される中でそのような種々の転写法を独立で用いるというのはいかにも非効率なことです。ということで変換器を生やしていきます。多分。<br>
+    <textarea id="in" spellcheck="false" onkeyup="document.getElementById('out').value = converter(document.getElementById('in').value)"></textarea><br>
+    <textarea readonly id="out" spellcheck="false"></textarea>
 </body>
