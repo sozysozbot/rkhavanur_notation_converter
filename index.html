@@ -18,17 +18,89 @@
             "r": "r", "L": "l", /* 第8群子音 */
             "h": "h", "H": "ɦ", "q": "ʔ", /* 第9群子音 */
             "j": "j", "w": "ʋ", /* 第10群子音 */
-            "=": "=", "-": "-", ".": ".", "'": "ˈ", " ": " ", "\n": "\n", /* 諸記号 */
+            "=": "=", "-": "-", "'": "ˈ", " ": " ", "\n": "\n", /* 諸記号 */
         };
+
         const converter = (input) => input.replace(/p\^/g, "p_f").replace(/t\^/g, "t_s").replace(/T\^/g, "T_S").replace(/c\^/g, "c_C").replace(/k\^/g, "k_x").replace(/K\^/g, "K_X").replace(/b\^/g, "b_v").replace(/d\^/g, "d_z").replace(/D\^/g, "D_Z").replace(/J\^/g, "J_I").replace(/g\^/g, "g_V").replace(/G\^/g, "G_R").split("").map(
             (c) => latin_to_ipa[c] ?? "*"
         ).join("");
+
+
+        const vowels = {
+            1: (word) => word.replace(/1\./g, "a").replace(/2\./g, "e").replace(/3\./g, "i").replace(/4\./g, "y").replace(/1:/g, "a:").replace(/2:/g, "e:").replace(/3:/g, "i:").replace(/4:/g, "y:"),
+            2: (word) => word.replace(/1\./g, "a~").replace(/2\./g, "e~").replace(/3\./g, "i~").replace(/4\./g, "y~").replace(/1:/g, "a^").replace(/2:/g, "e^").replace(/3:/g, "i^").replace(/4:/g, "y^"),
+            3: (word) => word.replace(/1\./g, "Q").replace(/2\./g, "o").replace(/3\./g, "u").replace(/4\./g, "W").replace(/1:/g, "Q:").replace(/2:/g, "o:").replace(/3:/g, "u:").replace(/4:/g, "W:"),
+            4: (word) => word.replace(/1\./g, "Q~").replace(/2\./g, "o~").replace(/3\./g, "u~").replace(/4\./g, "W~").replace(/1:/g, "Q^").replace(/2:/g, "o^").replace(/3:/g, "u^").replace(/4:/g, "W^")
+        };
+        const constants = { 
+            1: (word) => word.replace(/1/g, "p").replace(/2/g, "t").replace(/3/g, "T").replace(/4/g, "c").replace(/5/g, "k").replace(/6/g, "K"),
+            2: (word) => word.replace(/1/g, "b").replace(/2/g, "d").replace(/3/g, "D").replace(/4/g, "J").replace(/5/g, "g").replace(/6/g, "G"), 
+            3: (word) => word.replace(/1/g, "f").replace(/2/g, "s").replace(/3/g, "S").replace(/4/g, "C").replace(/5/g, "x").replace(/6/g, "X"),
+            4: (word) => word.replace(/1/g, "v").replace(/2/g, "z").replace(/3/g, "Z").replace(/4/g, "I").replace(/5/g, "V").replace(/6/g, "R"), 
+            5: (word) => word.replace(/1/g, "p^").replace(/2/g, "t^").replace(/3/g, "T^").replace(/4/g, "c^").replace(/5/g, "k^").replace(/6/g, "K^"),
+            6: (word) => word.replace(/1/g, "b^").replace(/2/g, "d^").replace(/3/g, "D^").replace(/4/g, "J^").replace(/5/g, "g^").replace(/6/g, "G^") 
+        };
+
+
+        const harmonic_converter = (input) => input.split("\n").map((line) => (line).split(" ")
+            .map((word) =>
+                word.match(/\(1-1\)/) ? constants[1](vowels[1](word.replace(/\(1-1\)/, ""))) : 
+                word.match(/\(pa\)/) ? constants[1](vowels[1](word.replace(/\(pa\)/, ""))) : 
+                word.match(/\(1-2\)/) ? constants[1](vowels[2](word.replace(/\(1-2\)/, ""))) : 
+                word.match(/\(ba\)/) ? constants[1](vowels[2](word.replace(/\(ba\)/, ""))) : 
+                word.match(/\(1-3\)/) ? constants[1](vowels[3](word.replace(/\(1-3\)/, ""))) : 
+                word.match(/\(fa\)/) ? constants[1](vowels[3](word.replace(/\(fa\)/, ""))) : 
+                word.match(/\(1-4\)/) ? constants[1](vowels[4](word.replace(/\(1-4\)/, ""))) : 
+                word.match(/\(va\)/) ? constants[1](vowels[4](word.replace(/\(va\)/, ""))) : 
+                word.match(/\(1-5\)/) ? constants[1](vowels[5](word.replace(/\(1-5\)/, ""))) : 
+                word.match(/\(p\^a\)/) ? constants[1](vowels[5](word.replace(/\(t\^a\)/, ""))) : 
+                word.match(/\(1-6\)/) ? constants[1](vowels[6](word.replace(/\(1-6\)/, ""))) : 
+                word.match(/\(b\^a\)/) ? constants[1](vowels[6](word.replace(/\(b\^a\)/, ""))) : 
+                word.match(/\(2-1\)/) ? constants[2](vowels[1](word.replace(/\(2-1\)/, ""))) : 
+                word.match(/\(pa\~\)/) ? constants[2](vowels[1](word.replace(/\(pa\~\)/, ""))) : 
+                word.match(/\(2-2\)/) ? constants[2](vowels[2](word.replace(/\(2-2\)/, ""))) : 
+                word.match(/\(ba\~\)/) ? constants[2](vowels[2](word.replace(/\(ba\~\)/, ""))) : 
+                word.match(/\(2-3\)/) ? constants[2](vowels[3](word.replace(/\(2-3\)/, ""))) : 
+                word.match(/\(fa\~\)/) ? constants[2](vowels[3](word.replace(/\(fa\~\)/, ""))) : 
+                word.match(/\(2-4\)/) ? constants[2](vowels[4](word.replace(/\(2-4\)/, ""))) : 
+                word.match(/\(va\~\)/) ? constants[2](vowels[4](word.replace(/\(va\~\)/, ""))) : 
+                word.match(/\(2-5\)/) ? constants[2](vowels[5](word.replace(/\(2-5\)/, ""))) : 
+                word.match(/\(p\^a\~\)/) ? constants[2](vowels[5](word.replace(/\(t\^a\~\)/, ""))) : 
+                word.match(/\(2-6\)/) ? constants[2](vowels[6](word.replace(/\(2-6\)/, ""))) : 
+                word.match(/\(b\^a\~\)/) ? constants[2](vowels[6](word.replace(/\(b\^a\~\)/, ""))) : 
+                word.match(/\(3-1\)/) ? constants[3](vowels[1](word.replace(/\(3-1\)/, ""))) : 
+                word.match(/\(pQ\)/) ? constants[3](vowels[1](word.replace(/\(pQ\)/, ""))) : 
+                word.match(/\(3-2\)/) ? constants[3](vowels[2](word.replace(/\(3-2\)/, ""))) : 
+                word.match(/\(bQ\)/) ? constants[3](vowels[2](word.replace(/\(bQ\)/, ""))) : 
+                word.match(/\(3-3\)/) ? constants[3](vowels[3](word.replace(/\(3-3\)/, ""))) : 
+                word.match(/\(fQ\)/) ? constants[3](vowels[3](word.replace(/\(fQ\)/, ""))) : 
+                word.match(/\(3-4\)/) ? constants[3](vowels[4](word.replace(/\(3-4\)/, ""))) : 
+                word.match(/\(vQ\)/) ? constants[3](vowels[4](word.replace(/\(vQ\)/, ""))) : 
+                word.match(/\(3-5\)/) ? constants[3](vowels[5](word.replace(/\(3-5\)/, ""))) : 
+                word.match(/\(p\^Q\)/) ? constants[3](vowels[5](word.replace(/\(t\^Q\)/, ""))) : 
+                word.match(/\(3-6\)/) ? constants[3](vowels[6](word.replace(/\(3-6\)/, ""))) : 
+                word.match(/\(b\^Q\)/) ? constants[3](vowels[6](word.replace(/\(b\^Q\)/, ""))) : 
+                word.match(/\(4-1\)/) ? constants[4](vowels[1](word.replace(/\(4-1\)/, ""))) : 
+                word.match(/\(pQ\~\)/) ? constants[4](vowels[1](word.replace(/\(pQ\~\)/, ""))) : 
+                word.match(/\(4-2\)/) ? constants[4](vowels[2](word.replace(/\(4-2\)/, ""))) : 
+                word.match(/\(bQ\~\)/) ? constants[4](vowels[2](word.replace(/\(bQ\~\)/, ""))) : 
+                word.match(/\(4-3\)/) ? constants[4](vowels[3](word.replace(/\(4-3\)/, ""))) : 
+                word.match(/\(fQ\~\)/) ? constants[4](vowels[3](word.replace(/\(fQ\~\)/, ""))) : 
+                word.match(/\(4-4\)/) ? constants[4](vowels[4](word.replace(/\(4-4\)/, ""))) : 
+                word.match(/\(vQ\~\)/) ? constants[4](vowels[4](word.replace(/\(vQ\~\)/, ""))) : 
+                word.match(/\(4-5\)/) ? constants[4](vowels[5](word.replace(/\(4-5\)/, ""))) : 
+                word.match(/\(p\^Q\~\)/) ? constants[4](vowels[5](word.replace(/\(t\^Q\~\)/, ""))) : 
+                word.match(/\(4-6\)/) ? constants[4](vowels[6](word.replace(/\(4-6\)/, ""))) : 
+                word.match(/\(b\^Q\~\)/) ? constants[4](vowels[6](word.replace(/\(b\^Q\~\)/, ""))) : word
+            ).join(" "))
+            .join("\n"); 
     </script>
 </head>
 
 <body>
     ラーヴァヌー語には様々な表記体系がありますが、当然現世の文字コードはそんなものをサポートしていないので、人々は苦労して様々な転写を使ってきました。しかしIPA表記も要求される中でそのような種々の転写法を独立で用いるというのはいかにも非効率なことです。ということで変換器を生やしていきます。多分。<br>
     <textarea id="in" spellcheck="false" rows="10" cols="80" style="font-family: Arial, Helvetica, sans-serif;"
-        onkeyup="document.getElementById('out').value = converter(document.getElementById('in').value)"></textarea><br>
-    <textarea readonly id="out" spellcheck="false" rows="10" cols="80" style="font-family: Arial, Helvetica, sans-serif;"></textarea>
+        onkeyup="document.getElementById('out').value = converter(harmonic_converter(document.getElementById('in').value))"></textarea><br>
+    <textarea readonly id="out" spellcheck="false" rows="10" cols="80"
+        style="font-family: Arial, Helvetica, sans-serif;"></textarea>
 </body>
