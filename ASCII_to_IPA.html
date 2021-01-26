@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ga2 ua nu1 zep1 a kik1</title>
+    <title>ASCII転写からIPA転写への変換器</title>
     <script>
         const latin_to_ipa = {
             "a": "æ", "e": "e̞", "i": "ɪ", "y": "y", /* 第1-2群母音 */
@@ -97,10 +97,9 @@
     </script>
 </head>
 
-<body>
-    ラーヴァヌー語には様々な表記体系がありますが、当然現世の文字コードはそんなものをサポートしていないので、人々は苦労して様々な転写を使ってきました。しかしIPA表記も要求される中でそのような種々の転写法を独立で用いるというのはいかにも非効率なことです。ということで変換器を生やしていきます。多分。<br>
+<body style="font-family: Arial, Helvetica, sans-serif;">
     <textarea id="in" spellcheck="false" rows="10" cols="80" style="font-family: Arial, Helvetica, sans-serif;"
         onkeyup="document.getElementById('out').value = converter(harmonic_converter(document.getElementById('in').value))"></textarea><br>
-    <textarea readonly id="out" spellcheck="false" rows="10" cols="80"
-        style="font-family: Arial, Helvetica, sans-serif;"></textarea>
+    <textarea readonly id="out" spellcheck="false" rows="10" cols="80" style="font-family: Arial, Helvetica, sans-serif;"></textarea><br>
+上のテキストボックスにASCII転写で螺語を書くと下のテキストボックスにIPA転写が生成されます。外来語判定は実装していないので、外来語を原語表記している文を変換する際は注意してください。例えば"(1-2)61:1=n3: b^o:HEn"と入力すると"qæ̃ːp=nɪ̃ː b͡βo̞ːɦən"と変換されます。
 </body>
