@@ -4,16 +4,31 @@
     <meta charset="UTF-8">
     <title>ga2 ua nu1 zep1 a kik1</title>
     <script>
-        const latin_to_ipa = { "E": "ə", "m": "m", "n": "n", "N": "ŋ", "r": "r", "L": "l", "h": "h", "H": "ɦ", "q": "ʔ", "j": "j", "w": "ʋ" };
-        const converter = (input) => input.split("").map(
-            (c) => latin_to_ipa[c]
+        const latin_to_ipa = {
+            "a": "æ", "e": "e̞", "i": "ɪ", "y": "y", /* 第1-2群母音 */
+            "Q": "ɑ", "o": "o̞", "u": "ʊ", "W": "ɯ", /* 第3-4群母音 */
+            ":": "ː", "~": "\u{0303}", "^": "\u{0303}ː", /* 母音系の諸記号; U+0303 COMBINING TILDE hem. */
+            "E": "ə", /* 第5群母音 */
+            "p": "p", "t": "t", "T": "ʈ", "c": "c", "k": "k", "K": "q", /* 第1群子音 */
+            "b": "b", "d": "d", "D": "ɖ", "J": "ɟ", "g": "ɡ", "G": "ɢ", /* 第2群子音 */
+            "f": "ɸ", "s": "s", "S": "ʂ", "C": "ç", "x": "x", "X": "χ", /* 第3群子音 */
+            "v": "β", "z": "z", "Z": "ʐ", "I": "ʝ", "V": "ɣ", "R": "ʁ", /* 第4群子音 */
+            "_": "\u{0361}", /* 第5-6群子音; U+0361 COMBINING DOUBLE INVERTED BREVE hem. */
+            "m": "m", "n": "n", "N": "ŋ", /* 第7群子音 */
+            "r": "r", "L": "l", /* 第8群子音 */
+            "h": "h", "H": "ɦ", "q": "ʔ", /* 第9群子音 */
+            "j": "j", "w": "ʋ", /* 第10群子音 */
+            "=": "=", "-": "-", ".": ".", "'": "ˈ", " ": " ", "\n": "\n", /* 諸記号 */
+        };
+        const converter = (input) => input.replace(/p\^/g, "p_f").replace(/t\^/g, "t_s").replace(/T\^/g, "T_S").replace(/c\^/g, "c_C").replace(/k\^/g, "k_x").replace(/K\^/g, "K_X").replace(/b\^/g, "b_v").replace(/d\^/g, "d_z").replace(/D\^/g, "D_Z").replace(/J\^/g, "J_I").replace(/g\^/g, "g_V").replace(/G\^/g, "G_R").split("").map(
+            (c) => latin_to_ipa[c] ?? "*"
         ).join("");
     </script>
 </head>
 
 <body>
     ラーヴァヌー語には様々な表記体系がありますが、当然現世の文字コードはそんなものをサポートしていないので、人々は苦労して様々な転写を使ってきました。しかしIPA表記も要求される中でそのような種々の転写法を独立で用いるというのはいかにも非効率なことです。ということで変換器を生やしていきます。多分。<br>
-    <textarea id="in" spellcheck="false"
+    <textarea id="in" spellcheck="false" rows="10" cols="80" style="font-family: Arial, Helvetica, sans-serif;"
         onkeyup="document.getElementById('out').value = converter(document.getElementById('in').value)"></textarea><br>
-    <textarea readonly id="out" spellcheck="false"></textarea>
+    <textarea readonly id="out" spellcheck="false" rows="10" cols="80" style="font-family: Arial, Helvetica, sans-serif;"></textarea>
 </body>
