@@ -94,6 +94,61 @@
                 word.match(/\(b\^Q\~\)/) ? consonants[6](vowels[4](word.replace(/\(b\^Q\~\)/, ""))) : word
             ).join(" "))
             .join("\n"); 
+
+            const assert_equivalence = (a, b) => console.assert(
+                converter(harmonic_converter(a)) === converter(harmonic_converter(b)),
+                "\n",
+                converter(harmonic_converter(a)),
+                "\n", 
+                converter(harmonic_converter(b))
+            );
+
+            ////////////////////////////////
+            //// 1. 焦点調和
+            ////////////////////////////////
+            // assert_equivalence("ta:T oH=W^t^Q~T^Q^=k^Q^mQ~", "21:3(1-1) 4:21.31:&2.H=51:m1(4-5)");
+            assert_equivalence("GaDe:=ni: zave:Vi", "61.32:=n3:(1-2) 21.12:53.(1-4)");
+            assert_equivalence("baGy: K^Q^p^", "11.64:(1-2) 61:1(4-5)");
+            // assert_equivalence("Ho~m=Zu~vo^V XeSa:Ce i~ge~", "33.12:5&H2.m=(4-4) 62.31:42.(1-3) 3.52:(2-2)");
+            // assert_equivalence("i~ge^ rih=yza:Vi=an=a:Lim G^a^b^=ni^", "3.52:(2-2) r3.h=4.21:53.=1.n&=1:L3.m(1-4) 61:1=n3:(2-6)");
+            // assert_equivalence("p^aK^y: u^m=u^Io~vW^=VQ~ qiNaL=eRe:Za:I", "11.64:(1-5) 3:42.14:&3:m=51.(4-4) 2.62:31:4&q3.N1.L=(1-4)");
+            // assert_equivalence("qi=iJ^a:d^ib^eb^a:d^ ReZa:Ie gi~be^JQ~d", "3.41:23.12.11:2&q3.=(1-6) 62.31:42.(1-4) 53.12:41.2(4-2)");
+
+            
+            ////////////////////////////////
+            //// 2. 付加調和
+            ////////////////////////////////
+            // assert_equivalence("uG^o: evVi:v re~c=Ti~pa^ce~", "3.52:(3-6) 2.153:1(1-4) 33.11:42.&r2.4=(2-1)");
+            assert_equivalence("Ga^b=ni^ d^u:b^Qd^G^Q Xa:f", "61:1=n3:(2-2) 23:11.261.(3-6) 61:1(1-3)");
+            // assert_equivalence("u~m=W~bu~dJQ^=gQ~ rih=yza:Vi=an Lu~d=du^bQ~dGQ~=Q~N", "4.13.241:&3:m=51.(2-2) r3.h=4.21:53.=1.n(1-4) 23:11.261.&L3.2=1:N(4-2)");
+            assert_equivalence("G^a^b^=ni^ yza:Vi zu^vQ~zRQ~ D^i~b^a^J^e~", "61:1=n3:(2-6) 4.21:53.(1-4) 23:11.261.(4-4) 33.11:42.(2-6)");
+            assert_equivalence("e~vVi^v u~Vo^ IeVaZi:v NeLx=jeska GQ:", "2.153:1(2-4) 3.52:(4-4) 42.51.33:1(1-4) NeLx=jeska GQ:");
+            // assert_equivalence("He~m=Je~ga~Di^b He~m=p^e~p^a^t^ u~Vo^ zQ~vo^Vu~=Q~Lu~m b^o:HEn", "42.51.33:1&H2.m=(2-2) 12.11:2&H2.m=(2-5) 3.52:(4-4) 21.12:53.&=1.L3.m(1-4) b^o:HEn");
+            // assert_equivalence("ge~by^dy^ Zive:V=a:Lim T^i~p^e^k^ K^Q^p^=nu^ GQ:", "52.14:24:(2-2) 33.12:5&=1:L3.m(1-4) 33.12:5(2-5) 61:1=n3:(4-5) GQ:");
+            assert_equivalence("G^a^b^=ni^ zi:vazRa b^o:HEn", "61:1=n3:(2-6) 23:11.261.(1-4) b^o:HEn");
+
+            ////////////////////////////////
+            //// 3. 単立調和
+            ////////////////////////////////
+
+            // assert_equivalence("safe:xi u~k^o^ vo~vQ^z", "21.12:53.(3-1) 3.52:(4-5) 12.11:2(1-4)");
+            assert_equivalence("gubo:JQd b^o:HEn", "53.12:41.2(3-2) b^o:HEn");
+            // assert_equivalence("SufQ:Co ug^o: vaRy:=a:Lim GQ:", "33.11:42.(3-3) 3.52:(3-6) 11.64&=1:L3.m(1-4) GQ:");
+            assert_equivalence("ZuvQ:Io b^o:HEn", "33.11:42.(3-4) b^o:HEn");
+            // assert_equivalence("T^u~p^Q^c^o~ Sife:x uJ^Q:d^ub^ob^Q:d^ b^o:HEn", "33.11:42.(3-5) 33.12:5(1-3) 3.41:23.12.11:2(3-6) b^o:HEn");
+            assert_equivalence("g^ob^W: zave:Vi GQ:", "52.14:(3-6) 21.12:53.(1-4) GQ:");
+
+            ////////////////////////////////
+            //// 4. 状況調和
+            ////////////////////////////////
+            // assert_equivalence("Ta^pe~ p=tQ^T=uN o~Ro^ZQ^I gi~be^Ja~d GQ:", "Ta^pe~ 21:3&1=3.N(4-1) 2.62:31:4(1-4) 53.12:41.2(2-2) GQ:");
+            // assert_equivalence("Di~ba^Je~ Zive:V Q~DH=u~JQ^du~bo~bQ^d=D GQ:", "33.11:42.(2-2) 33.12:5(1-4) 3.41:23.12.11:2&1.3H=3(4-2) GQ:");
+            // assert_equivalence("Di~ba^Je~ Zive:V Q~SH=Ho~m=o~SxQ^Co~S=S GQ:", "33.11:42.(2-2) 33.12:5(1-4) 2.351:42.3&H2.m=&1.3H=3(4-3) GQ:");
+            // assert_equivalence("rih=ysa:xi=an=eHa: G^a^b^=ni^ W^H=zu^vQ~zRQ~=zQ^ GQ:", "r3.h=4.21:53.=1.n&=2.H1:(1-3) 61:1=n3:(2-6) 4:H=23:11.261.=21:(4-4) GQ:");
+            // assert_equivalence("Ro~ZQ^Io~ IeVaZi:v NeLx=jeska b^o:HEn", "62.31:42.(4-4) 42.51.33:1 NeLx=jeska(1-4) b^o:HEn");
+            // assert_equivalence("im=Ra:v=ka Ga^b t^u^p^Q~t^K^Q~ b^o:HEn", "61:1&3.m=51.(1-4) 61:1(2-2) 23:11.261.(4-5) b^o:HEn");
+            // assert_equivalence("K^o~T^Q^c^o~ JegaDi:b NeLx=jeska b^o:HEn", "62.31:42.(4-5) 42.51.33:1 NeLx=jeska(1-2) b^o:HEn");
+            // assert_equivalence("D^ub^Q:J^o Ra:v i~Ja^di~be~ba^b D^u~b^o^g^ GQ:", "33.11:42.(3-6) 61:1(1-4) 3.41:23.12.11:2(2-2) 33.12:5(4-6) GQ:");
     </script>
 </head>
 
